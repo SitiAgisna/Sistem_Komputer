@@ -1,0 +1,2885 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorium Sistem Komputer | Kelas X SMK</title>
+
+  <style>
+    :root {
+      --navy: #142b4a;
+      --blue: #2864dc;
+      --blue-light: #edf3ff;
+      --bg: #f5f7fb;
+      --white: #ffffff;
+      --text: #263448;
+      --muted: #6b778b;
+      --border: #e0e6ef;
+      --green: #16845b;
+      --green-light: #e8f7ef;
+      --red: #c03939;
+      --red-light: #fff0f0;
+      --orange: #a86408;
+      --orange-light: #fff4df;
+      --radius: 16px;
+      --shadow: 0 6px 24px rgba(25, 45, 80, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #9dbbff;
+      outline-offset: 2px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 13px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      background: var(--navy);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .top-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      max-width: 1500px;
+      margin: auto;
+      min-height: calc(100vh - 70px);
+    }
+
+    .sidebar {
+      padding: 24px 15px;
+      border-right: 1px solid var(--border);
+      background: #fbfcff;
+    }
+
+    .nav-label {
+      margin: 10px 12px;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      font-weight: 800;
+      color: #8590a2;
+      text-transform: uppercase;
+    }
+
+    .nav-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 11px 12px;
+      border-radius: 10px;
+      text-align: left;
+      color: #4b5870;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: var(--blue-light);
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    main {
+      padding: 30px clamp(16px, 4vw, 48px) 60px;
+      min-width: 0;
+    }
+
+    .page {
+      display: none;
+      animation: appear 0.2s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    h1 {
+      font-size: clamp(27px, 4vw, 42px);
+      margin: 8px 0 14px;
+    }
+
+    h2 {
+      font-size: 25px;
+      margin-top: 0;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      margin-top: 7px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hero {
+      background: linear-gradient(125deg, #142b4a, #285ab0);
+      color: white;
+      border-radius: 23px;
+      padding: clamp(25px, 5vw, 50px);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .hero h1,
+    .hero h2,
+    .hero h3 {
+      color: white;
+    }
+
+    .hero p {
+      color: #e4edff;
+      max-width: 730px;
+    }
+
+    .hero .eyebrow {
+      color: #b8d0ff;
+    }
+
+    .hero-decoration {
+      position: absolute;
+      right: -20px;
+      bottom: -60px;
+      font-size: 180px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--navy);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.15s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .btn-dark {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .btn-danger {
+      color: var(--red);
+      border-color: #f0cccc;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin: 20px 0 30px;
+    }
+
+    .stat, .card, .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 21px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 27px;
+      color: var(--navy);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 28px 0 16px;
+    }
+
+    .section-head h2 {
+      margin-bottom: 0;
+    }
+
+    .callout {
+      background: var(--blue-light);
+      border-left: 4px solid var(--blue);
+      padding: 15px 17px;
+      border-radius: 9px;
+      margin: 16px 0;
+    }
+
+    .callout.success {
+      background: var(--green-light);
+      border-color: var(--green);
+    }
+
+    .callout.warning {
+      background: var(--orange-light);
+      border-color: #d68b19;
+    }
+
+    .callout.danger {
+      background: var(--red-light);
+      border-color: var(--red);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 30px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .emoji {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin: 7px 0;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .topic-card {
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-3px);
+      border-color: #b9ccff;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .field {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+    }
+
+    .toolbar .field {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .filter-btn {
+      padding: 9px 13px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+    }
+
+    .filter-btn.active {
+      background: var(--blue-light);
+      color: var(--blue);
+      border-color: #b9ccff;
+      font-weight: 700;
+    }
+
+    .hardware-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .hardware-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      min-width: 0;
+    }
+
+    .hardware-card:hover {
+      border-color: var(--blue);
+      box-shadow: var(--shadow);
+    }
+
+    .hardware-card .emoji {
+      font-size: 32px;
+    }
+
+    .hardware-card strong {
+      display: block;
+      color: var(--navy);
+    }
+
+    .hardware-card small {
+      color: var(--muted);
+    }
+
+    .hardware-card p {
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    .hardware-card.selected {
+      border: 2px solid var(--blue);
+      background: var(--blue-light);
+    }
+
+    .detail-box {
+      background: var(--blue-light);
+      border-radius: 12px;
+      padding: 17px;
+      margin-top: 18px;
+      min-height: 100px;
+    }
+
+    /* =========================
+       KLASIFIKASI KOMPONEN
+       ========================= */
+
+    .build-progress {
+      height: 8px;
+      border-radius: 20px;
+      background: #e8edf5;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .build-progress div {
+      height: 100%;
+      width: 0;
+      background: var(--blue);
+      transition: width 0.2s;
+    }
+
+    .build-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.5fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .component-bank,
+    .category-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .component-bank h3,
+    .category-box h3 {
+      margin-top: 0;
+    }
+
+    .component-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .component-item {
+      width: 100%;
+      min-width: 0;
+      padding: 11px 9px;
+      background: white;
+      border: 1px solid #dfe5ef;
+      border-radius: 11px;
+      text-align: left;
+      color: var(--text);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      overflow-wrap: anywhere;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .component-item:hover {
+      border-color: var(--blue);
+    }
+
+    .component-item:active {
+      cursor: grabbing;
+    }
+
+    .component-item.selected {
+      border: 2px solid var(--blue);
+      background: var(--blue-light);
+    }
+
+    .component-item .component-emoji {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .component-item strong {
+      font-size: 12px;
+      display: block;
+    }
+
+    .component-item small {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .category-slot {
+      border: 2px dashed #c9d3e2;
+      border-radius: 13px;
+      padding: 12px;
+      min-width: 0;
+      min-height: 180px;
+      background: #fafbfe;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .category-slot.drag-over {
+      background: #eaf1ff;
+      border-color: var(--blue);
+      border-style: solid;
+    }
+
+    .category-slot h4 {
+      font-size: 14px;
+      margin: 0 0 5px;
+    }
+
+    .category-slot .category-description {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+
+    .slot-items {
+      display: grid;
+      gap: 7px;
+      min-height: 70px;
+    }
+
+    .slot-items:empty::after {
+      content: "Lepaskan komponen di sini";
+      color: #9aa5b6;
+      font-size: 11px;
+      text-align: center;
+      padding: 16px 4px;
+      border: 1px dashed #e1e6ee;
+      border-radius: 8px;
+    }
+
+    .placed-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px;
+      background: white;
+      border: 1px solid #dbe3ef;
+      border-radius: 8px;
+      font-size: 11px;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .placed-item.correct {
+      border-color: #8cd3ae;
+      background: #effaf4;
+    }
+
+    .placed-item.incorrect {
+      border-color: #efb0b0;
+      background: #fff5f5;
+    }
+
+    .placed-item .placed-name {
+      flex: 1;
+      min-width: 0;
+      font-weight: 700;
+    }
+
+    .placed-item .placed-status {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .remove-part {
+      flex-shrink: 0;
+      border: 0;
+      background: transparent;
+      color: #69758a;
+      font-size: 17px;
+      padding: 0 3px;
+      line-height: 1;
+    }
+
+    .remove-part:hover {
+      color: var(--red);
+    }
+
+    .build-feedback {
+      margin-top: 16px;
+    }
+
+    .build-feedback:empty {
+      display: none;
+    }
+
+    .build-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 15px;
+    }
+
+    .mobile-instruction {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 13px;
+    }
+
+
+    /* =========================
+       TROUBLESHOOTING
+       ========================= */
+
+    .case-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 9px;
+      margin: 15px 0;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background: #f8faff;
+    }
+
+    .option input {
+      margin-top: 5px;
+      accent-color: var(--blue);
+    }
+
+    .answer-feedback {
+      margin-top: 12px;
+    }
+
+
+    .vn-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      margin: 20px auto;
+      max-width: 460px;
+    }
+    .vn-node {
+      width: min(100%, 300px);
+      padding: 12px 16px;
+      border: 2px solid var(--blue);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text, #172033);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .vn-node:hover, .vn-node:focus-visible { background: #eef4ff; outline: 2px solid var(--blue); }
+    .vn-connector { color: var(--blue); font-size: 22px; line-height: 1; }
+    .vn-cpu { background: #eef4ff; }
+    .vn-subnodes { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+    .vn-subnodes span { border: 1px solid var(--blue); border-radius: 6px; padding: 3px 10px; background: white; font-size: .9em; }
+    .vn-node.vn-bus { width: min(100%, 360px); border-style: dashed; font-size: .95em; }
+
+    /* =========================
+       IPO
+       ========================= */
+
+    .ipo-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      margin: 20px 0;
+    }
+
+    .ipo-step {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 8px;
+      text-align: center;
+    }
+
+    .ipo-step .emoji {
+      font-size: 27px;
+    }
+
+    .ipo-step strong {
+      display: block;
+      color: var(--navy);
+    }
+
+    .ipo-step small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .ipo-arrow {
+      color: var(--blue);
+      font-size: 22px;
+      text-align: center;
+      align-self: center;
+    }
+
+    .scenario-btn {
+      width: 100%;
+      padding: 13px;
+      text-align: left;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 9px;
+    }
+
+    .scenario-btn.active {
+      border-color: var(--blue);
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    /* =========================
+       ANALISIS SPESIFIKASI
+       ========================= */
+
+    .spec-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .spec-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .spec-list li {
+      border-bottom: 1px solid #edf0f5;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .spec-list li:last-child {
+      border-bottom: 0;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* =========================
+       KUIS
+       ========================= */
+
+    .quiz-question {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .quiz-question h3 {
+      font-size: 16px;
+    }
+
+    .quiz-result {
+      background: var(--blue-light);
+      padding: 22px;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+
+    .quiz-score {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1050px) {
+      .layout {
+        grid-template-columns: 205px minmax(0, 1fr);
+      }
+
+      .hardware-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .build-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar {
+        padding: 10px 15px;
+      }
+
+      .top-label {
+        display: none;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 68px;
+        z-index: 90;
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+        padding: 8px 10px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-label {
+        display: none;
+      }
+
+      .nav-btn {
+        flex: 0 0 auto;
+        width: auto;
+        white-space: nowrap;
+        margin: 0;
+        padding: 9px 11px;
+        font-size: 12px;
+      }
+
+      main {
+        padding: 22px 14px 40px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-slot {
+        min-height: 135px;
+      }
+
+      .ipo-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hardware-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-decoration {
+        font-size: 110px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .component-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hardware-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    /* RESPONSIVE LAYOUT: laptop, tablet, and mobile */
+    html {
+      width: 100%;
+      min-width: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+    }
+
+    img, svg, video, canvas, iframe {
+      max-width: 100%;
+    }
+
+    .layout,
+    main,
+    .page,
+    .card,
+    .hero,
+    .grid-2,
+    .grid-3,
+    .stats,
+    .hardware-grid,
+    .build-workspace,
+    .ipo-flow {
+      min-width: 0;
+    }
+
+    .layout > *, .grid-2 > *, .grid-3 > *, .stats > *,
+    .hardware-grid > *, .build-workspace > *, .ipo-flow > * {
+      min-width: 0;
+    }
+
+    p, li, h1, h2, h3, h4, .nav-btn, .component-name,
+    .question, .feedback, .card, .category-slot {
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    button, input, select, textarea {
+      max-width: 100%;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-content {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .hero-decoration {
+      max-width: 100%;
+      pointer-events: none;
+    }
+
+    /* Tablet and small laptop */
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 200px minmax(0, 1fr);
+      }
+
+      main {
+        padding-left: clamp(16px, 3vw, 28px);
+        padding-right: clamp(16px, 3vw, 28px);
+      }
+
+      .hero {
+        gap: 18px;
+      }
+
+      .hero-decoration {
+        font-size: clamp(64px, 10vw, 110px);
+      }
+    }
+
+    /* Mobile and portrait tablet: navigation becomes horizontally scrollable */
+    @media (max-width: 760px) {
+      .topbar {
+        position: sticky;
+        padding: 9px 14px;
+        gap: 10px;
+      }
+
+      .brand {
+        gap: 9px;
+        min-width: 0;
+        font-size: 14px;
+      }
+
+      .brand-icon {
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand small {
+        font-size: 10px;
+      }
+
+      .layout {
+        display: block;
+        width: 100%;
+      }
+
+      .sidebar {
+        top: 56px;
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .sidebar > div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: max-content;
+      }
+
+      .nav-btn {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 75vw;
+        white-space: nowrap;
+      }
+
+      main {
+        width: 100%;
+        padding: 20px 14px 36px;
+      }
+
+      .hero {
+        display: block;
+        padding: clamp(18px, 5vw, 28px);
+      }
+
+      .hero-decoration {
+        display: none;
+      }
+
+      .stats,
+      .grid-2,
+      .grid-3,
+      .category-grid,
+      .build-workspace {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .hardware-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ipo-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .vn-diagram {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+
+      .table-wrap, table {
+        max-width: 100%;
+      }
+
+      .button-row > button,
+      .button-row > a {
+        max-width: 100%;
+      }
+    }
+
+    /* Standard phones */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: clamp(24px, 7vw, 32px);
+      }
+
+      h2 {
+        font-size: clamp(20px, 5.5vw, 26px);
+      }
+
+      h3 {
+        font-size: 17px;
+      }
+
+      .topbar {
+        padding: 8px 10px;
+      }
+
+      .brand-icon {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 18px;
+      }
+
+      .brand {
+        font-size: 13px;
+      }
+
+      .brand small {
+        font-size: 9px;
+      }
+
+      .sidebar {
+        top: 50px;
+        padding: 7px 8px;
+      }
+
+      .nav-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+      }
+
+      main {
+        padding: 16px 10px 30px;
+      }
+
+      .card, .panel, .quiz-card, .content-card {
+        padding: 14px !important;
+      }
+
+      .hardware-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .ipo-flow {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .component-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .category-slot {
+        min-height: 100px;
+      }
+
+      .button-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button-row button {
+        width: 100%;
+      }
+
+      .vn-node.vn-bus {
+        width: 100%;
+      }
+
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+
+    /* Very narrow phones */
+    @media (max-width: 360px) {
+      main {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .hero {
+        padding: 16px;
+      }
+
+      .nav-btn {
+        padding: 7px 8px;
+        font-size: 10px;
+      }
+
+      .stats,
+      .grid-2,
+      .grid-3,
+      .hardware-grid,
+      .ipo-flow {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+    }
+
+    /* Short landscape screens */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .topbar {
+        position: relative;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">⌘</div>
+      <div>
+        Hardware Explorer
+        <small>Laboratorium Sistem Komputer</small>
+      </div>
+    </div>
+    <div class="top-label">Informatika · Kelas X SMK</div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="nav-label">Pembelajaran</div>
+        <button class="nav-btn active" data-page="home">⌂ Beranda</button>
+        <button class="nav-btn" data-page="materi">▤ Materi Inti</button>
+        <button class="nav-btn" data-page="explore">⌕ Eksplorasi Hardware</button>
+        <button class="nav-btn" data-page="build">▦ Klasifikasi Komponen</button>
+        <button class="nav-btn" data-page="trouble">⚙ Troubleshooting</button>
+        <button class="nav-btn" data-page="ipo">⇄ Simulasi IPO</button>
+        <button class="nav-btn" data-page="spec">▣ Analisis Spesifikasi</button>
+        <button class="nav-btn" data-page="quiz">✓ Kuis Formatif</button>
+      </div>
+    </aside>
+
+    <main>
+      <!-- BERANDA -->
+      <section class="page active" id="page-home">
+        <div class="hero">
+          <div class="hero-content">
+            <div class="eyebrow">Virtual Hardware Lab</div>
+            <h1>Mengenal Sistem Komputer melalui Eksplorasi</h1>
+            <p>
+              Jadilah teknisi komputer. Kenali perangkat keras, pahami fungsinya,
+              klasifikasikan komponen, dan selesaikan masalah berdasarkan cara
+              kerja sistem komputer.
+            </p>
+            <div class="button-row">
+              <button class="btn btn-primary" data-go="materi">Mulai Belajar →</button>
+              <button class="btn" data-go="build">Coba Simulasi</button>
+            </div>
+          </div>
+          <div class="hero-decoration">⌘</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>4</strong>
+            <span>Kategori perangkat keras</span>
+          </div>
+          <div class="stat">
+            <strong>16</strong>
+            <span>Komponen untuk dieksplorasi</span>
+          </div>
+          <div class="stat">
+            <strong>10</strong>
+            <span>Soal kuis formatif</span>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Jalur Pembelajaran</div>
+            <h2>Mulai dari memahami, lalu mencoba</h2>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card topic-card" data-go="materi">
+            <div class="emoji">📘</div>
+            <span class="pill">01 · Pahami</span>
+            <h3>Pelajari konsep</h3>
+            <p>Kenali perangkat input, output, pemrosesan, penyimpanan, serta alur IPO.</p>
+          </div>
+
+          <div class="card topic-card" data-go="build">
+            <div class="emoji">🧩</div>
+            <span class="pill">02 · Praktik</span>
+            <h3>Klasifikasikan hardware</h3>
+            <p>Tempatkan komponen pada kategori yang tepat dan periksa hasilnya.</p>
+          </div>
+
+          <div class="card topic-card" data-go="trouble">
+            <div class="emoji">🔧</div>
+            <span class="pill">03 · Pecahkan</span>
+            <h3>Berpikir seperti teknisi</h3>
+            <p>Analisis gejala dan tentukan langkah pemeriksaan yang masuk akal.</p>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>Misi kamu</strong>
+          <p>
+            Sekolah menerima 20 komputer dengan komponen yang belum dirakit.
+            Kamu berperan sebagai teknisi yang harus mengenali komponen, menjelaskan fungsinya,
+            memahami cara kerja komputer, dan menganalisis masalah sederhana agar komputer dapat digunakan.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Tujuan pembelajaran</h3>
+          <ul>
+            <li>Menjelaskan pengertian dan fungsi perangkat keras komputer.</li>
+            <li>Mengidentifikasi perangkat input, output, pemrosesan, dan penyimpanan.</li>
+            <li>Menjelaskan hubungan antarkomponen dalam arsitektur Von Neumann.</li>
+            <li>Menjelaskan alur pengolahan data melalui model Input–Process–Output (IPO).</li>
+            <li>Menganalisis masalah sederhana berdasarkan gejala yang ditemukan.</li>
+            <li>Membandingkan spesifikasi komputer sesuai kebutuhan pengguna.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- MATERI -->
+      <section class="page" id="page-materi">
+        <div class="eyebrow">Materi Inti</div>
+        <h1>Mengenal Sistem Komputer</h1>
+        <p class="muted">
+          Perangkat keras merupakan bagian fisik komputer yang dapat dilihat
+          dan disentuh. Setiap perangkat mempunyai fungsi yang saling melengkapi.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="emoji">⌨️</div>
+            <span class="pill">Input</span>
+            <h3>Perangkat Masukan</h3>
+            <p>
+              Digunakan untuk memasukkan data atau instruksi ke dalam komputer.
+            </p>
+            <p><strong>Contoh:</strong> keyboard, mouse, touchpad, scanner.</p>
+          </div>
+
+          <div class="card">
+            <div class="emoji">🖥️</div>
+            <span class="pill">Output</span>
+            <h3>Perangkat Keluaran</h3>
+            <p>
+              Menyajikan hasil pengolahan data agar dapat dilihat, didengar,
+              atau digunakan.
+            </p>
+            <p><strong>Contoh:</strong> monitor, printer, projector, speaker.</p>
+          </div>
+
+          <div class="card">
+            <div class="emoji">⚙️</div>
+            <span class="pill">Processing</span>
+            <h3>Perangkat Pemrosesan</h3>
+            <p>
+              Mendukung pengolahan instruksi dan data. Komponen yang berbeda
+              menjalankan tugas yang berbeda pula.
+            </p>
+            <p><strong>Contoh:</strong> CPU, RAM, GPU, motherboard.</p>
+          </div>
+
+          <div class="card">
+            <div class="emoji">💾</div>
+            <span class="pill">Storage</span>
+            <h3>Perangkat Penyimpanan</h3>
+            <p>
+              Menyimpan data dan program. Sebagian media tetap menyimpan data
+              ketika komputer dimatikan.
+            </p>
+            <p><strong>Contoh:</strong> HDD, SSD, USB flash drive, optical drive.</p>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>Perbedaan komponen yang sering tertukar</h2>
+        </div>
+
+        <div class="card">
+          <h3>CPU dan RAM</h3>
+          <p>
+            <strong>CPU</strong> menjalankan instruksi dan melakukan operasi
+            pemrosesan. <strong>RAM</strong> menyimpan sementara data dan
+            instruksi yang sedang digunakan agar dapat diakses dengan cepat.
+            RAM bukan tempat penyimpanan permanen.
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>HDD dan SSD</h3>
+          <p>
+            Keduanya merupakan media penyimpanan. HDD menyimpan data pada
+            piringan magnetik yang berputar, sedangkan SSD menggunakan memori
+            flash tanpa bagian mekanis bergerak seperti HDD.
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3>CPU dan GPU</h3>
+          <p>
+            CPU menangani berbagai instruksi umum. GPU dirancang untuk menangani
+            banyak operasi grafis secara paralel dan dapat membantu beban kerja
+            komputasi tertentu. Tidak semua komputer memerlukan GPU terpisah.
+          </p>
+        </div>
+
+        <div class="section-head">
+          <h2>Bagaimana komputer memproses data?</h2>
+        </div>
+
+        <div class="ipo-flow">
+          <div class="ipo-step">
+            <div class="emoji">⌨️</div>
+            <strong>Input</strong>
+            <small>Data masuk</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">⚙️</div>
+            <strong>Process</strong>
+            <small>Data diolah</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">🖥️</div>
+            <strong>Output</strong>
+            <small>Hasil ditampilkan</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">💾</div>
+            <strong>Storage</strong>
+            <small>Data disimpan</small>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Perlu diingat</strong>
+          <p>
+            IPO adalah model sederhana untuk memahami alur pengolahan data.
+            Penyimpanan dapat berinteraksi dengan proses pengolahan; alurnya
+            tidak selalu berlangsung satu arah secara berurutan.
+          </p>
+        </div>
+
+        <div class="section-head">
+          <h2>Arsitektur Von Neumann</h2>
+        </div>
+
+        <div class="card">
+          <p>
+            Arsitektur Von Neumann merupakan model komputer yang menyimpan
+            instruksi program dan data dalam memori yang sama. Pilih salah satu
+            bagian diagram untuk melihat fungsi setiap unit.
+          </p>
+          <div class="vn-diagram" aria-label="Diagram interaktif arsitektur Von Neumann">
+            <button class="vn-node" data-vn="input">Input Unit</button>
+            <div class="vn-connector">↓</div>
+            <button class="vn-node" data-vn="memory">Memory Unit</button>
+            <div class="vn-connector">↕</div>
+            <button class="vn-node vn-cpu" data-vn="cpu">CPU
+              <span class="vn-subnodes"> <span>ALU</span><span>CU</span> </span>
+            </button>
+            <div class="vn-connector">↓</div>
+            <button class="vn-node" data-vn="output">Output Unit</button>
+            <button class="vn-node vn-bus" data-vn="bus">Bus: data · alamat · kontrol</button>
+          </div>
+          <div class="callout" id="vnDetail" aria-live="polite">
+            <strong>Input Unit</strong>
+            <p>Memasukkan data atau instruksi ke dalam sistem komputer.</p>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button class="btn btn-primary" data-go="explore">Eksplorasi Hardware →</button>
+        </div>
+      </section>
+
+      <!-- EKSPLORASI HARDWARE -->
+      <section class="page" id="page-explore">
+        <div class="eyebrow">Eksplorasi Hardware</div>
+        <h1>Kenali setiap komponen</h1>
+        <p class="muted">
+          Pilih komponen untuk melihat kategori, fungsi, dan penjelasannya.
+        </p>
+
+        <div class="toolbar">
+          <input class="field" id="hardwareSearch" placeholder="Cari komponen, misalnya CPU atau printer...">
+        </div>
+
+        <div class="toolbar" id="hardwareFilters">
+          <button class="filter-btn active" data-filter="Semua">Semua</button>
+          <button class="filter-btn" data-filter="Input">Input</button>
+          <button class="filter-btn" data-filter="Output">Output</button>
+          <button class="filter-btn" data-filter="Pemrosesan">Pemrosesan</button>
+          <button class="filter-btn" data-filter="Penyimpanan">Penyimpanan</button>
+        </div>
+
+        <div class="hardware-grid" id="hardwareGrid"></div>
+        <div class="detail-box" id="hardwareDetail" aria-live="polite">
+          Pilih salah satu komponen untuk melihat penjelasannya.
+        </div>
+      </section>
+
+      <!-- KLASIFIKASI -->
+      <section class="page" id="page-build">
+        <div class="eyebrow">Aktivitas Interaktif</div>
+        <h1>Klasifikasi Komponen</h1>
+        <p>
+          Kamu memiliki 12 komponen yang harus dikelompokkan menjadi input,
+          output, pemrosesan, dan penyimpanan.
+        </p>
+
+        <div class="callout">
+          <strong>Cara bermain</strong>
+          <p>
+            Seret komponen ke kotak kategori yang sesuai. Di perangkat layar
+            sentuh, kamu juga bisa mengetuk komponen, kemudian mengetuk kategori.
+            Jika jawaban belum tepat, komponen tetap berada di kotak dan dapat
+            dipindahkan kembali.
+          </p>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <strong>Progres klasifikasi</strong>
+            <span id="buildCount">0 dari 12 komponen ditempatkan</span>
+          </div>
+          <div class="build-progress">
+            <div id="buildProgressBar"></div>
+          </div>
+          <small class="muted">Komponen yang sudah ditempatkan bisa dipindahkan kapan saja.</small>
+        </div>
+
+        <div class="build-workspace" style="margin-top:18px">
+          <div class="component-bank">
+            <h3>Bank Komponen</h3>
+            <p class="mobile-instruction">
+              Seret komponen atau klik komponen untuk memilihnya.
+            </p>
+            <div class="component-list" id="componentBank"></div>
+          </div>
+
+          <div>
+            <div class="category-grid" id="categoryGrid"></div>
+
+            <div class="build-actions">
+              <button class="btn btn-primary" id="checkBuildBtn">Periksa Jawaban</button>
+              <button class="btn" id="resetBuildBtn">Ulangi Aktivitas</button>
+            </div>
+            <div class="build-feedback" id="buildFeedback" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section class="page" id="page-trouble">
+        <div class="eyebrow">Problem Based Learning</div>
+        <h1>Laboratorium Troubleshooting</h1>
+        <p>
+          Amati gejala, pilih langkah pemeriksaan yang relevan, lalu jelaskan
+          alasanmu. Dalam praktik, periksa hal sederhana terlebih dahulu
+          sebelum menyimpulkan bahwa perangkat rusak.
+        </p>
+
+        <div id="troubleCases"></div>
+      </section>
+
+      <!-- SIMULASI IPO -->
+      <section class="page" id="page-ipo">
+        <div class="eyebrow">Simulasi Interaktif</div>
+        <h1>Simulasi Input–Process–Output</h1>
+        <p>Pilih aktivitas untuk mengamati bagaimana komponen bekerja bersama.</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Pilih skenario</h3>
+            <button class="scenario-btn active" data-scenario="document">
+              📝 Mengetik dan mencetak dokumen
+            </button>
+            <button class="scenario-btn" data-scenario="music">
+              🎵 Memutar musik dari flash drive
+            </button>
+            <button class="scenario-btn" data-scenario="image">
+              🎨 Mengedit gambar
+            </button>
+          </div>
+
+          <div class="card">
+            <h3>Aktivitas yang dipilih</h3>
+            <p id="ipoDescription">
+              Pengguna mengetik teks, komputer memproses dokumen, monitor
+              menampilkan hasil, dan printer mencetak dokumen.
+            </p>
+            <div class="callout" id="ipoInsight">
+              Input: keyboard. Process: CPU dan RAM. Output: monitor dan printer.
+            </div>
+          </div>
+        </div>
+
+        <div class="ipo-flow" id="ipoFlow">
+          <div class="ipo-step">
+            <div class="emoji">⌨️</div>
+            <strong>Input</strong>
+            <small>Keyboard</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">⚙️</div>
+            <strong>Process</strong>
+            <small>CPU dan RAM</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">🖥️</div>
+            <strong>Output</strong>
+            <small>Monitor dan printer</small>
+          </div>
+          <div class="ipo-step">
+            <div class="emoji">💾</div>
+            <strong>Storage</strong>
+            <small>SSD atau HDD jika disimpan</small>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Pertanyaan pemahaman</h3>
+          <p>
+            Mengapa sebuah komputer masih membutuhkan media penyimpanan seperti
+            HDD atau SSD jika sudah memiliki RAM?
+          </p>
+          <textarea class="field" id="ipoAnswer" placeholder="Tuliskan jawabanmu..."></textarea>
+          <div class="button-row">
+            <button class="btn btn-primary" id="ipoCheckBtn">Lihat Petunjuk</button>
+          </div>
+          <div id="ipoFeedback"></div>
+        </div>
+      </section>
+
+      <!-- ANALISIS SPESIFIKASI -->
+      <section class="page" id="page-spec">
+        <div class="eyebrow">Tantangan Teknisi</div>
+        <h1>Analisis Spesifikasi Komputer</h1>
+        <p>
+          Sekolah ingin membeli komputer untuk kebutuhan pembelajaran.
+          Bandingkan dua pilihan berikut berdasarkan kebutuhan, bukan hanya
+          berdasarkan satu komponen.
+        </p>
+
+        <div class="grid-2">
+          <div class="spec-card">
+            <span class="pill">Pilihan A</span>
+            <h2>Komputer A</h2>
+            <div class="price">Rp7.500.000</div>
+            <ul class="spec-list">
+              <li><strong>Prosesor:</strong> Intel Core i7 Gen 13</li>
+              <li><strong>RAM:</strong> 4 GB DDR4</li>
+              <li><strong>Penyimpanan:</strong> HDD 1 TB</li>
+              <li><strong>Grafis:</strong> Intel integrated graphics</li>
+              <li><strong>Monitor:</strong> LED 19 inci</li>
+            </ul>
+          </div>
+
+          <div class="spec-card">
+            <span class="pill">Pilihan B</span>
+            <h2>Komputer B</h2>
+            <div class="price">Rp8.500.000</div>
+            <ul class="spec-list">
+              <li><strong>Prosesor:</strong> Intel Core i5 Gen 13</li>
+              <li><strong>RAM:</strong> 16 GB DDR4</li>
+              <li><strong>Penyimpanan:</strong> SSD 512 GB</li>
+              <li><strong>Grafis:</strong> NVIDIA GTX 1650 4 GB</li>
+              <li><strong>Monitor:</strong> LED 24 inci IPS</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>Catatan analisis</strong>
+          <p>
+            Nama prosesor saja tidak cukup untuk menentukan komputer yang paling
+            sesuai. Perhatikan kebutuhan aplikasi, kapasitas RAM, jenis dan
+            kapasitas penyimpanan, grafis, monitor, serta anggaran. Harga dan
+            spesifikasi di atas merupakan contoh kasus pembelajaran, bukan
+            penawaran harga terkini.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Tugas analisis</h3>
+          <p>
+            1. Komputer mana yang kamu pilih untuk laboratorium sekolah?
+            <br>
+            2. Apa alasanmu berdasarkan spesifikasi dan kebutuhan?
+            <br>
+            3. Apa kelemahan dari pilihan yang kamu ambil?
+          </p>
+
+          <label for="specChoice"><strong>Pilihan kamu</strong></label>
+          <select class="field" id="specChoice" style="margin:8px 0 15px">
+            <option value="">Pilih komputer</option>
+            <option value="A">Komputer A</option>
+            <option value="B">Komputer B</option>
+          </select>
+
+          <label for="specReason"><strong>Alasan dan pertimbangan</strong></label>
+          <textarea class="field" id="specReason" placeholder="Jelaskan pertimbanganmu..." style="margin-top:8px"></textarea>
+
+          <div class="button-row">
+            <button class="btn btn-primary" id="saveSpecBtn">Periksa Kelengkapan Jawaban</button>
+            <button class="btn" id="copySpecBtn">Salin Jawaban</button>
+          </div>
+          <div id="specFeedback"></div>
+        </div>
+      </section>
+
+      <!-- KUIS -->
+      <section class="page" id="page-quiz">
+        <div class="eyebrow">Evaluasi Formatif</div>
+        <h1>Kuis Sistem Komputer</h1>
+        <p>Jawab 10 soal berikut untuk memeriksa pemahamanmu tentang perangkat keras, arsitektur Von Neumann, mekanisme IPO, troubleshooting, dan media penyimpanan.</p>
+
+        <div id="quizContainer"></div>
+        <button class="btn btn-primary" id="submitQuizBtn">Periksa Jawaban</button>
+        <button class="btn" id="retryQuizBtn">Ulangi Kuis</button>
+        <div id="quizResult"></div>
+      </section>
+
+      <div class="footer">
+        Hardware Explorer · Media Pembelajaran Informatika Kelas X SMK
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* =========================
+       DIAGRAM VON NEUMANN
+       ========================= */
+    const vnDescriptions = {
+      input: { title: "Input Unit", text: "Menerima data atau instruksi dari perangkat masukan, misalnya keyboard dan mouse." },
+      memory: { title: "Memory Unit", text: "Menyimpan data dan instruksi yang dibutuhkan saat komputer menjalankan program." },
+      cpu: { title: "CPU: ALU dan CU", text: "CPU memproses instruksi. ALU melakukan operasi aritmetika dan logika, sedangkan CU mengatur jalannya instruksi dan koordinasi kerja komponen." },
+      output: { title: "Output Unit", text: "Menyampaikan hasil pengolahan kepada pengguna, misalnya melalui monitor atau speaker." },
+      bus: { title: "Bus", text: "Bus data membawa data, bus alamat menunjukkan lokasi tujuan atau sumber, dan bus kontrol membawa sinyal pengendalian antarkomponen." }
+    };
+    document.querySelectorAll("[data-vn]").forEach((node) => {
+      node.addEventListener("click", () => {
+        const detail = vnDescriptions[node.dataset.vn];
+        if (!detail) return;
+        const panel = document.getElementById("vnDetail");
+        panel.innerHTML = `<strong>${detail.title}</strong><p>${detail.text}</p>`;
+      });
+    });
+
+    /* =========================
+       NAVIGASI HALAMAN
+       ========================= */
+
+    function showPage(pageName) {
+      document.querySelectorAll(".page").forEach(page => {
+        page.classList.toggle("active", page.id === "page-" + pageName);
+      });
+
+      document.querySelectorAll(".nav-btn").forEach(button => {
+        button.classList.toggle("active", button.dataset.page === pageName);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.page));
+    });
+
+    document.querySelectorAll("[data-go]").forEach(button => {
+      button.addEventListener("click", () => showPage(button.dataset.go));
+    });
+
+    /* =========================
+       DATA HARDWARE
+       ========================= */
+
+    const hardware = [
+      {
+        id: "keyboard",
+        name: "Keyboard",
+        icon: "⌨️",
+        category: "Input",
+        short: "Memasukkan teks dan perintah.",
+        detail: "Keyboard digunakan untuk memasukkan huruf, angka, simbol, dan perintah melalui tombol."
+      },
+      {
+        id: "mouse",
+        name: "Mouse",
+        icon: "🖱️",
+        category: "Input",
+        short: "Mengendalikan penunjuk di layar.",
+        detail: "Mouse membantu pengguna menggerakkan pointer, memilih objek, mengeklik, dan menjalankan perintah."
+      },
+      {
+        id: "touchpad",
+        name: "Touchpad",
+        icon: "▱",
+        category: "Input",
+        short: "Mengendalikan pointer dengan sentuhan.",
+        detail: "Touchpad merupakan permukaan sensitif sentuhan yang umum digunakan pada laptop untuk mengendalikan pointer."
+      },
+      {
+        id: "scanner",
+        name: "Scanner",
+        icon: "📠",
+        category: "Input",
+        short: "Mengubah dokumen fisik menjadi data digital.",
+        detail: "Scanner menangkap gambar atau dokumen fisik dan mengubahnya menjadi data digital."
+      },
+      {
+        id: "monitor",
+        name: "Monitor",
+        icon: "🖥️",
+        category: "Output",
+        short: "Menampilkan teks, gambar, dan antarmuka.",
+        detail: "Monitor menyajikan keluaran visual dari komputer kepada pengguna."
+      },
+      {
+        id: "printer",
+        name: "Printer",
+        icon: "🖨️",
+        category: "Output",
+        short: "Mencetak hasil ke media fisik.",
+        detail: "Printer menghasilkan keluaran fisik, seperti teks dan gambar pada kertas."
+      },
+      {
+        id: "projector",
+        name: "Projector",
+        icon: "📽️",
+        category: "Output",
+        short: "Memproyeksikan tampilan ke permukaan besar.",
+        detail: "Projector menampilkan gambar dari komputer ke layar atau permukaan yang lebih besar."
+      },
+      {
+        id: "speaker",
+        name: "Speaker",
+        icon: "🔊",
+        category: "Output",
+        short: "Menghasilkan suara.",
+        detail: "Speaker mengubah sinyal audio menjadi suara yang dapat didengar."
+      },
+      {
+        id: "cpu",
+        name: "CPU",
+        icon: "🧠",
+        category: "Pemrosesan",
+        short: "Menjalankan instruksi dan operasi.",
+        detail: "CPU menjalankan instruksi program, melakukan operasi aritmetika dan logika, serta mengendalikan pelaksanaan instruksi."
+      },
+      {
+        id: "ram",
+        name: "RAM",
+        icon: "▤",
+        category: "Pemrosesan",
+        short: "Menyimpan data sementara saat digunakan.",
+        detail: "RAM menyediakan ruang penyimpanan sementara untuk data dan instruksi yang sedang digunakan. Isinya umumnya hilang ketika daya dimatikan."
+      },
+      {
+        id: "gpu",
+        name: "GPU / VGA",
+        icon: "🎮",
+        category: "Pemrosesan",
+        short: "Menangani pengolahan grafis.",
+        detail: "GPU membantu mengolah grafis dan tugas paralel tertentu. GPU dapat terintegrasi atau menjadi komponen tersendiri."
+      },
+      {
+        id: "motherboard",
+        name: "Motherboard",
+        icon: "▦",
+        category: "Pemrosesan",
+        short: "Menghubungkan komponen komputer.",
+        detail: "Motherboard menyediakan koneksi dan jalur komunikasi bagi berbagai komponen. Perannya berbeda dari CPU yang menjalankan instruksi."
+      },
+      {
+        id: "hdd",
+        name: "HDD",
+        icon: "💽",
+        category: "Penyimpanan",
+        short: "Menyimpan data pada piringan magnetik.",
+        detail: "HDD merupakan media penyimpanan yang menggunakan piringan magnetik dan memiliki bagian mekanis bergerak."
+      },
+      {
+        id: "ssd",
+        name: "SSD",
+        icon: "💾",
+        category: "Penyimpanan",
+        short: "Menyimpan data menggunakan memori flash.",
+        detail: "SSD menggunakan memori flash dan umumnya memiliki waktu akses lebih cepat daripada HDD mekanis."
+      },
+      {
+        id: "flash",
+        name: "USB Flash Drive",
+        icon: "🔌",
+        category: "Penyimpanan",
+        short: "Menyimpan dan memindahkan berkas.",
+        detail: "USB flash drive adalah media penyimpanan portabel yang dapat dihubungkan melalui port USB."
+      },
+      {
+        id: "optical",
+        name: "Optical Drive",
+        icon: "💿",
+        category: "Penyimpanan",
+        short: "Membaca atau menulis media optik.",
+        detail: "Optical drive digunakan untuk membaca, dan pada perangkat yang mendukung, menulis data pada CD, DVD, atau media optik lain."
+      }
+    ];
+
+    let activeHardwareFilter = "Semua";
+
+    function renderHardware() {
+      const grid = document.getElementById("hardwareGrid");
+      const query = document.getElementById("hardwareSearch").value.toLowerCase().trim();
+
+      const filtered = hardware.filter(item => {
+        const matchesCategory =
+          activeHardwareFilter === "Semua" ||
+          item.category === activeHardwareFilter;
+
+        const matchesQuery =
+          item.name.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.short.toLowerCase().includes(query);
+
+        return matchesCategory && matchesQuery;
+      });
+
+      grid.innerHTML = "";
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="card">Komponen tidak ditemukan.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement("button");
+        card.className = "hardware-card";
+        card.type = "button";
+        card.innerHTML = `
+          <div class="emoji">${item.icon}</div>
+          <strong>${item.name}</strong>
+          <small>${item.category}</small>
+          <p>${item.short}</p>
+        `;
+
+        card.addEventListener("click", () => {
+          document.querySelectorAll(".hardware-card").forEach(el => {
+            el.classList.remove("selected");
+          });
+
+          card.classList.add("selected");
+
+          document.getElementById("hardwareDetail").innerHTML = `
+            <strong>${item.icon} ${item.name} · ${item.category}</strong>
+            <p>${item.detail}</p>
+          `;
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById("hardwareSearch").addEventListener("input", renderHardware);
+
+    document.querySelectorAll("#hardwareFilters [data-filter]").forEach(button => {
+      button.addEventListener("click", () => {
+        activeHardwareFilter = button.dataset.filter;
+
+        document.querySelectorAll("#hardwareFilters .filter-btn").forEach(el => {
+          el.classList.toggle("active", el === button);
+        });
+
+        renderHardware();
+      });
+    });
+
+    renderHardware();
+
+    /* =========================
+       KLASIFIKASI KOMPONEN
+       BUGFIX:
+       1. Semua komponen yang ditempatkan selalu dirender.
+       2. Komponen salah kategori tetap terlihat.
+       3. Drag/drop menggunakan event delegation.
+       4. Klik komponen lalu klik kategori juga didukung.
+       ========================= */
+
+    const buildItems = [
+      { id: "keyboard", name: "Keyboard", icon: "⌨️", category: "Input" },
+      { id: "mouse", name: "Mouse", icon: "🖱️", category: "Input" },
+      { id: "scanner", name: "Scanner", icon: "📠", category: "Input" },
+      { id: "touchpad", name: "Touchpad", icon: "▱", category: "Input" },
+
+      { id: "monitor", name: "Monitor", icon: "🖥️", category: "Output" },
+      { id: "printer", name: "Printer", icon: "🖨️", category: "Output" },
+      { id: "speaker", name: "Speaker", icon: "🔊", category: "Output" },
+
+      { id: "cpu", name: "CPU", icon: "🧠", category: "Pemrosesan" },
+      { id: "ram", name: "RAM", icon: "▤", category: "Pemrosesan" },
+      { id: "gpu", name: "GPU / VGA", icon: "🎮", category: "Pemrosesan" },
+
+      { id: "hdd", name: "HDD", icon: "💽", category: "Penyimpanan" },
+      { id: "flash", name: "USB Flash Drive", icon: "🔌", category: "Penyimpanan" }
+    ];
+
+    const categories = [
+      {
+        id: "Input",
+        icon: "⌨️",
+        description: "Memasukkan data atau instruksi."
+      },
+      {
+        id: "Output",
+        icon: "🖥️",
+        description: "Menyajikan hasil pengolahan."
+      },
+      {
+        id: "Pemrosesan",
+        icon: "⚙️",
+        description: "Memproses data dan instruksi."
+      },
+      {
+        id: "Penyimpanan",
+        icon: "💾",
+        description: "Menyimpan data dan program."
+      }
+    ];
+
+    // Menyimpan kategori tempat setiap komponen diletakkan.
+    // Contoh: placed.keyboard = "Input"
+    const placed = {};
+
+    // Komponen yang sedang dipilih untuk mode klik.
+    let selectedPart = null;
+
+    // Menyimpan apakah hasil pemeriksaan sudah dilakukan.
+    let buildChecked = false;
+
+    function getBuildItem(id) {
+      return buildItems.find(item => item.id === id);
+    }
+
+    function renderBuild() {
+      const bank = document.getElementById("componentBank");
+      const categoryGrid = document.getElementById("categoryGrid");
+
+      bank.innerHTML = "";
+      categoryGrid.innerHTML = "";
+
+      /*
+       * BANK KOMPONEN
+       *
+       * Hanya komponen yang belum ditempatkan yang ditampilkan di bank.
+       * Komponen yang sudah masuk kotak kategori akan ditampilkan di kotak
+       * tersebut, termasuk ketika kategorinya belum benar.
+       */
+      const availableItems = buildItems.filter(item => {
+        return !Object.prototype.hasOwnProperty.call(placed, item.id);
+      });
+
+      if (availableItems.length === 0) {
+        bank.innerHTML = `
+          <div class="callout success" style="grid-column:1/-1">
+            Semua komponen sudah ditempatkan. Kamu masih bisa memindahkannya
+            dengan menyeret komponen dari kotak kategori lain.
+          </div>
+        `;
+      }
+
+      availableItems.forEach(item => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "component-item";
+        button.draggable = true;
+        button.dataset.partId = item.id;
+        button.setAttribute("aria-label", "Pilih atau seret " + item.name);
+
+        if (selectedPart === item.id) {
+          button.classList.add("selected");
+        }
+
+        button.innerHTML = `
+          <span class="component-emoji">${item.icon}</span>
+          <strong>${item.name}</strong>
+          <small>Seret atau klik</small>
+        `;
+
+        bank.appendChild(button);
+      });
+
+      /*
+       * KOTAK KATEGORI
+       *
+       * BAGIAN PERBAIKAN UTAMA:
+       * Jangan memfilter berdasarkan apakah kategori komponen benar.
+       * Tampilkan SEMUA komponen yang placed[id] sesuai dengan kotak
+       * yang sedang dibuat. Dengan demikian, jawaban yang salah pun
+       * tetap terlihat dan dapat dipindahkan.
+       */
+      categories.forEach(category => {
+        const slot = document.createElement("div");
+
+        slot.className = "category-slot";
+        slot.dataset.category = category.id;
+
+        slot.innerHTML = `
+          <h4>${category.icon} ${category.id}</h4>
+          <p class="category-description">${category.description}</p>
+          <div class="slot-items" data-slot-items="${category.id}"></div>
+        `;
+
+        const slotItems = slot.querySelector(".slot-items");
+
+        const itemsInThisSlot = buildItems.filter(item => {
+          return placed[item.id] === category.id;
+        });
+
+        itemsInThisSlot.forEach(item => {
+          const isCorrect = item.category === category.id;
+
+          const placedCard = document.createElement("div");
+          placedCard.className =
+            "placed-item" +
+            (buildChecked ? (isCorrect ? " correct" : " incorrect") : "");
+
+          placedCard.dataset.partId = item.id;
+          placedCard.draggable = true;
+
+          placedCard.innerHTML = `
+            <span>${item.icon}</span>
+            <span class="placed-name">${item.name}</span>
+            ${
+              buildChecked
+                ? `<span class="placed-status">${isCorrect ? "✓" : "✕"}</span>`
+                : ""
+            }
+            <button type="button"
+              class="remove-part"
+              data-remove-part="${item.id}"
+              aria-label="Kembalikan ${item.name} ke bank komponen"
+              title="Kembalikan ke bank">×</button>
+          `;
+
+          slotItems.appendChild(placedCard);
+        });
+
+        categoryGrid.appendChild(slot);
+      });
+
+      updateBuildProgress();
+    }
+
+    function updateBuildProgress() {
+      const placedCount = Object.keys(placed).length;
+      const total = buildItems.length;
+
+      document.getElementById("buildCount").textContent =
+        `${placedCount} dari ${total} komponen ditempatkan`;
+
+      document.getElementById("buildProgressBar").style.width =
+        `${(placedCount / total) * 100}%`;
+    }
+
+    function clearBuildFeedback() {
+      buildChecked = false;
+      document.getElementById("buildFeedback").innerHTML = "";
+    }
+
+    function placePart(partId, categoryId) {
+      const item = getBuildItem(partId);
+
+      const validCategory = categories.some(category => {
+        return category.id === categoryId;
+      });
+
+      if (!item || !validCategory) return;
+
+      // Memindahkan komponen cukup dengan mengganti kategorinya.
+      // Komponen tidak diduplikasi dan tidak dihapus dari data.
+      placed[partId] = categoryId;
+
+      selectedPart = null;
+      clearBuildFeedback();
+      renderBuild();
+    }
+
+    function removePart(partId) {
+      if (!Object.prototype.hasOwnProperty.call(placed, partId)) return;
+
+      delete placed[partId];
+
+      selectedPart = null;
+      clearBuildFeedback();
+      renderBuild();
+    }
+
+    function resetBuild() {
+      Object.keys(placed).forEach(id => delete placed[id]);
+
+      selectedPart = null;
+      buildChecked = false;
+
+      document.getElementById("buildFeedback").innerHTML = "";
+
+      renderBuild();
+    }
+
+    function checkBuild() {
+      const total = buildItems.length;
+      const placedCount = Object.keys(placed).length;
+
+      let correctCount = 0;
+
+      buildItems.forEach(item => {
+        if (placed[item.id] === item.category) {
+          correctCount++;
+        }
+      });
+
+      buildChecked = true;
+      selectedPart = null;
+      renderBuild();
+
+      const feedback = document.getElementById("buildFeedback");
+
+      if (placedCount < total) {
+        feedback.innerHTML = `
+          <div class="callout warning">
+            <strong>Masih ada komponen yang belum ditempatkan.</strong>
+            <p>
+              Kamu sudah menempatkan ${placedCount} dari ${total} komponen.
+              Tempatkan komponen yang tersisa, lalu periksa kembali jawabanmu.
+            </p>
+            <p><strong>Jawaban benar saat ini: ${correctCount} dari ${total}.</strong></p>
+          </div>
+        `;
+      } else if (correctCount === total) {
+        feedback.innerHTML = `
+          <div class="callout success">
+            <strong>Bagus! Semua klasifikasi benar.</strong>
+            <p>
+              Kamu berhasil mengelompokkan ${correctCount} komponen dengan tepat.
+              Pastikan kamu juga memahami fungsi setiap perangkat.
+            </p>
+          </div>
+        `;
+      } else {
+        feedback.innerHTML = `
+          <div class="callout danger">
+            <strong>Masih ada klasifikasi yang perlu diperbaiki.</strong>
+            <p>
+              Jawaban benar: ${correctCount} dari ${total} komponen.
+              Komponen dengan tanda ✕ tetap berada di kotaknya. Seret komponen
+              tersebut ke kategori lain atau gunakan tombol × untuk
+              mengembalikannya ke bank komponen.
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    /*
+     * EVENT DELEGATION
+     *
+     * Event dipasang pada kontainer yang tetap ada.
+     * Setelah renderBuild() membuat ulang kartu komponen dan kotak,
+     * interaksi tetap bekerja karena event tidak bergantung pada elemen lama.
+     */
+
+    const buildWorkspace = document.querySelector(".build-workspace");
+
+    buildWorkspace.addEventListener("dragstart", event => {
+      const component = event.target.closest("[data-part-id]");
+
+      if (!component) return;
+
+      const partId = component.dataset.partId;
+
+      if (!getBuildItem(partId)) return;
+
+      event.dataTransfer.setData("text/plain", partId);
+      event.dataTransfer.effectAllowed = "move";
+
+      // Membantu browser mempertahankan ID komponen selama drag.
+      selectedPart = partId;
+    });
+
+    buildWorkspace.addEventListener("dragover", event => {
+      const slot = event.target.closest(".category-slot");
+
+      if (!slot) return;
+
+      // Wajib untuk mengizinkan drop pada elemen kategori.
+      event.preventDefault();
+
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "move";
+      }
+
+      slot.classList.add("drag-over");
+    });
+
+    buildWorkspace.addEventListener("dragleave", event => {
+      const slot = event.target.closest(".category-slot");
+
+      if (!slot) return;
+
+      // Jangan menghilangkan highlight saat pointer berpindah
+      // di antara elemen anak dalam slot yang sama.
+      if (slot.contains(event.relatedTarget)) return;
+
+      slot.classList.remove("drag-over");
+    });
+
+    buildWorkspace.addEventListener("drop", event => {
+      const slot = event.target.closest(".category-slot");
+
+      if (!slot) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      slot.classList.remove("drag-over");
+
+      const partId = event.dataTransfer.getData("text/plain");
+      const categoryId = slot.dataset.category;
+
+      if (!partId || !categoryId) return;
+
+      placePart(partId, categoryId);
+    });
+
+    buildWorkspace.addEventListener("click", event => {
+      // Tombol untuk mengembalikan komponen ke bank.
+      const removeButton = event.target.closest("[data-remove-part]");
+
+      if (removeButton) {
+        event.preventDefault();
+        event.stopPropagation();
+        removePart(removeButton.dataset.removePart);
+        return;
+      }
+
+      // Klik pada kartu komponen di bank atau di kotak kategori.
+      const component = event.target.closest("[data-part-id]");
+
+      if (component) {
+        const partId = component.dataset.partId;
+
+        if (!getBuildItem(partId)) return;
+
+        selectedPart = partId;
+        renderBuild();
+
+        return;
+      }
+
+      // Jika komponen dipilih, klik kotak kategori untuk menempatkannya.
+      const slot = event.target.closest(".category-slot");
+
+      if (slot && selectedPart) {
+        placePart(selectedPart, slot.dataset.category);
+      }
+    });
+
+    document.getElementById("checkBuildBtn").addEventListener("click", checkBuild);
+    document.getElementById("resetBuildBtn").addEventListener("click", resetBuild);
+
+    // Render pertama kali saat halaman disiapkan.
+    renderBuild();
+
+    /* =========================
+       TROUBLESHOOTING
+       ========================= */
+
+    const troubleData = [
+      {
+        title: "Kasus 1 · Monitor tidak menampilkan gambar",
+        scenario: "Komputer menyala, tetapi monitor tidak menampilkan gambar.",
+        options: [
+          "Memastikan monitor menyala dan kabel daya terhubung.",
+          "Memeriksa kabel display serta pilihan input monitor.",
+          "Langsung menyimpulkan bahwa CPU rusak.",
+          "Meminta bantuan guru atau teknisi jika pemeriksaan awal belum berhasil."
+        ],
+        correct: [0, 1, 3],
+        explanation:
+          "Periksa daya monitor, kabel display, dan sumber input terlebih dahulu. Jika masalah belum teratasi, minta bantuan guru atau teknisi; gejala ini saja belum membuktikan CPU rusak."
+      },
+      {
+        title: "Kasus 2 · Speaker tidak mengeluarkan suara",
+        scenario: "Video berjalan, tetapi suara tidak terdengar.",
+        options: [
+          "Memeriksa volume sistem dan aplikasi.",
+          "Memastikan speaker mendapat daya dan kabel terhubung.",
+          "Memeriksa perangkat output audio yang dipilih.",
+          "Langsung mengganti motherboard tanpa pemeriksaan."
+        ],
+        correct: [0, 1, 2],
+        explanation:
+          "Periksa pengaturan volume, koneksi, daya, dan perangkat output audio terlebih dahulu sebelum mempertimbangkan kerusakan perangkat."
+      },
+      {
+        title: "Kasus 3 · Flash drive tidak dapat dibaca",
+        scenario: "Berkas pada USB flash drive tidak bisa dibuka.",
+        options: [
+          "Mencoba port USB lain dan memeriksa apakah perangkat terdeteksi.",
+          "Mencoba flash drive pada komputer lain jika tersedia.",
+          "Langsung memformat flash drive tanpa mencadangkan data.",
+          "Memeriksa pesan kesalahan dan kondisi berkas."
+        ],
+        correct: [0, 1, 3],
+        explanation:
+          "Pemeriksaan koneksi, perangkat lain, dan pesan kesalahan membantu mempersempit penyebab. Hindari memformat sebelum mempertimbangkan risiko kehilangan data."
+      }
+    ];
+
+    function renderTroubleshooting() {
+      const container = document.getElementById("troubleCases");
+      container.innerHTML = "";
+
+      troubleData.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "case-card";
+
+        const optionsHTML = item.options.map((option, optionIndex) => `
+          <label class="option">
+            <input type="checkbox" data-case="${index}" value="${optionIndex}">
+            <span>${option}</span>
+          </label>
+        `).join("");
+
+        card.innerHTML = `
+          <span class="pill">Studi Kasus ${index + 1}</span>
+          <h3>${item.title}</h3>
+          <p>${item.scenario}</p>
+          <strong>Pilih semua langkah pemeriksaan yang masuk akal.</strong>
+          <div class="option-list">${optionsHTML}</div>
+          <button class="btn btn-primary" data-check-case="${index}">Periksa Pilihan</button>
+          <div class="answer-feedback" id="caseFeedback${index}"></div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("troubleCases").addEventListener("click", event => {
+      const button = event.target.closest("[data-check-case]");
+
+      if (!button) return;
+
+      const index = Number(button.dataset.checkCase);
+      const item = troubleData[index];
+
+      const selected = Array.from(
+        document.querySelectorAll(`input[data-case="${index}"]:checked`)
+      ).map(input => Number(input.value));
+
+      const allCorrect =
+        selected.length === item.correct.length &&
+        item.correct.every(value => selected.includes(value));
+
+      document.getElementById(`caseFeedback${index}`).innerHTML = `
+        <div class="callout ${allCorrect ? "success" : "warning"}">
+          <strong>${allCorrect ? "Pilihanmu tepat." : "Tinjau kembali pilihanmu."}</strong>
+          <p>${item.explanation}</p>
+        </div>
+      `;
+    });
+
+    renderTroubleshooting();
+
+    /* =========================
+       SIMULASI IPO
+       ========================= */
+
+    const ipoScenarios = {
+      document: {
+        description:
+          "Pengguna mengetik teks, komputer memproses dokumen, monitor menampilkan hasil, dan printer mencetak dokumen.",
+        insight:
+          "Input: keyboard. Process: CPU dan RAM. Output: monitor dan printer. Storage: SSD atau HDD jika dokumen disimpan.",
+        steps: [
+          ["⌨️", "Input", "Keyboard"],
+          ["⚙️", "Process", "CPU dan RAM"],
+          ["🖥️", "Output", "Monitor dan printer"],
+          ["💾", "Storage", "SSD atau HDD jika disimpan"]
+        ]
+      },
+      music: {
+        description:
+          "Komputer membaca berkas musik dari flash drive, memproses data audio, lalu mengeluarkan suara melalui speaker atau headphone.",
+        insight:
+          "Input data: flash drive sebagai sumber berkas. Process: CPU dan RAM. Output: speaker atau headphone. Flash drive merupakan media penyimpanan.",
+        steps: [
+          ["🔌", "Sumber data", "USB flash drive"],
+          ["⚙️", "Process", "CPU dan RAM"],
+          ["🔊", "Output", "Speaker atau headphone"],
+          ["💾", "Storage", "Flash drive menyimpan berkas"]
+        ]
+      },
+      image: {
+        description:
+          "Pengguna memilih dan mengedit gambar. Komputer memproses perubahan, menampilkan hasil, lalu dapat menyimpan berkas gambar.",
+        insight:
+          "Input: mouse, keyboard, atau scanner. Process: CPU, RAM, dan mungkin GPU. Output: monitor. Storage: SSD atau HDD untuk menyimpan hasil.",
+        steps: [
+          ["🖱️", "Input", "Mouse dan keyboard"],
+          ["⚙️", "Process", "CPU, RAM, dan GPU bila diperlukan"],
+          ["🖥️", "Output", "Monitor"],
+          ["💾", "Storage", "SSD atau HDD"]
+        ]
+      }
+    };
+
+    function setIpoScenario(name) {
+      const scenario = ipoScenarios[name];
+
+      if (!scenario) return;
+
+      document.getElementById("ipoDescription").textContent = scenario.description;
+      document.getElementById("ipoInsight").textContent = scenario.insight;
+
+      document.querySelectorAll("[data-scenario]").forEach(button => {
+        button.classList.toggle("active", button.dataset.scenario === name);
+      });
+
+      document.getElementById("ipoFlow").innerHTML = scenario.steps.map(step => `
+        <div class="ipo-step">
+          <div class="emoji">${step[0]}</div>
+          <strong>${step[1]}</strong>
+          <small>${step[2]}</small>
+        </div>
+      `).join("");
+    }
+
+    document.querySelectorAll("[data-scenario]").forEach(button => {
+      button.addEventListener("click", () => setIpoScenario(button.dataset.scenario));
+    });
+
+    document.getElementById("ipoCheckBtn").addEventListener("click", () => {
+      const answer = document.getElementById("ipoAnswer").value.trim();
+      const feedback = document.getElementById("ipoFeedback");
+
+      if (!answer) {
+        feedback.innerHTML = `
+          <div class="callout warning">Tuliskan jawabanmu terlebih dahulu.</div>
+        `;
+        return;
+      }
+
+      feedback.innerHTML = `
+        <div class="callout">
+          <strong>Petunjuk jawaban</strong>
+          <p>
+            RAM menyimpan data sementara ketika komputer bekerja dan isinya
+            umumnya tidak bertahan setelah daya dimatikan. HDD dan SSD dapat
+            menyimpan data serta program dalam jangka panjang, termasuk ketika
+            komputer dimatikan.
+          </p>
+          <p>Bandingkan petunjuk tersebut dengan jawaban yang kamu tulis.</p>
+        </div>
+      `;
+    });
+
+    /* =========================
+       ANALISIS SPESIFIKASI
+       ========================= */
+
+    document.getElementById("saveSpecBtn").addEventListener("click", () => {
+      const choice = document.getElementById("specChoice").value;
+      const reason = document.getElementById("specReason").value.trim();
+      const feedback = document.getElementById("specFeedback");
+
+      if (!choice || reason.length < 20) {
+        feedback.innerHTML = `
+          <div class="callout warning">
+            Pilih salah satu komputer dan jelaskan alasanmu dengan lebih lengkap
+            (minimal 20 karakter).
+          </div>
+        `;
+        return;
+      }
+
+      feedback.innerHTML = `
+        <div class="callout success">
+          <strong>Jawaban sudah terisi.</strong>
+          <p>
+            Pilihan: Komputer ${choice}. Periksa kembali apakah alasanmu
+            mempertimbangkan kebutuhan pengguna, RAM, penyimpanan, grafis,
+            monitor, dan anggaran.
+          </p>
+          <p>Tidak ada satu pilihan yang otomatis benar untuk semua kebutuhan.</p>
+        </div>
+      `;
+    });
+
+    document.getElementById("copySpecBtn").addEventListener("click", async () => {
+      const choice = document.getElementById("specChoice").value;
+      const reason = document.getElementById("specReason").value.trim();
+
+      if (!choice || !reason) {
+        document.getElementById("specFeedback").innerHTML = `
+          <div class="callout warning">Isi pilihan dan alasan terlebih dahulu.</div>
+        `;
+        return;
+      }
+
+      const text =
+        `Pilihan: Komputer ${choice}\nAlasan dan pertimbangan:\n${reason}`;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById("specFeedback").innerHTML = `
+          <div class="callout success">Jawaban berhasil disalin.</div>
+        `;
+      } catch {
+        document.getElementById("specFeedback").innerHTML = `
+          <div class="callout warning">
+            Browser tidak mengizinkan penyalinan otomatis. Silakan pilih teks
+            jawaban dan salin secara manual.
+          </div>
+          <textarea class="field" readonly>${text}</textarea>
+        `;
+      }
+    });
+
+    /* =========================
+       KUIS FORMATIF
+       ========================= */
+
+    const quizQuestions = [
+      {
+        question: "Perangkat yang digunakan untuk memasukkan teks ke komputer adalah ...",
+        options: ["Monitor", "Keyboard", "Speaker", "Printer"],
+        answer: 1,
+        explanation: "Keyboard merupakan perangkat input untuk memasukkan teks dan perintah ke komputer."
+      },
+      {
+        question: "Komponen utama yang menjalankan instruksi dan mengolah data adalah ...",
+        options: ["CPU", "Monitor", "SSD", "Speaker"],
+        answer: 0,
+        explanation: "CPU memproses instruksi program. Di dalamnya terdapat unit seperti ALU dan CU."
+      },
+      {
+        question: "Manakah yang termasuk perangkat output?",
+        options: ["Mouse", "Scanner", "Printer", "Keyboard"],
+        answer: 2,
+        explanation: "Printer menghasilkan keluaran berupa teks atau gambar pada kertas."
+      },
+      {
+        question: "Apa fungsi utama RAM ketika komputer sedang bekerja?",
+        options: ["Mencetak dokumen", "Menyimpan data dan instruksi sementara", "Mengeluarkan suara", "Memindai dokumen"],
+        answer: 1,
+        explanation: "RAM menyimpan data dan instruksi sementara yang sedang digunakan oleh sistem. Isinya bersifat sementara dan hilang ketika daya mati."
+      },
+      {
+        question: "Manakah yang merupakan media penyimpanan nonvolatil?",
+        options: ["RAM", "Register CPU", "SSD", "Cache CPU"],
+        answer: 2,
+        explanation: "SSD mempertahankan data meskipun komputer dimatikan, sehingga termasuk media penyimpanan nonvolatil."
+      },
+      {
+        question: "Dalam arsitektur Von Neumann, unit yang melakukan operasi aritmetika dan logika adalah ...",
+        options: ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "Input Unit", "Output Unit"],
+        answer: 1,
+        explanation: "ALU melakukan operasi aritmetika, seperti penjumlahan, serta operasi logika."
+      },
+      {
+        question: "Apa tugas utama Control Unit (CU) pada CPU?",
+        options: ["Mengatur dan mengoordinasikan pelaksanaan instruksi", "Menampilkan gambar ke layar", "Menyimpan file secara permanen", "Memasukkan suara dari mikrofon"],
+        answer: 0,
+        explanation: "CU mengatur jalannya instruksi dan mengoordinasikan kerja bagian-bagian komputer."
+      },
+      {
+        question: "Saat murid mengetik huruf A dan huruf itu muncul di monitor, urutan IPO yang paling tepat adalah ...",
+        options: ["Monitor → keyboard → CPU", "Keyboard → pemrosesan oleh CPU → monitor", "CPU → monitor → keyboard", "RAM → printer → keyboard"],
+        answer: 1,
+        explanation: "Keyboard menerima masukan, CPU memprosesnya, lalu monitor menampilkan hasilnya sebagai keluaran."
+      },
+      {
+        question: "Komputer menyala, tetapi monitor tidak menampilkan gambar. Langkah awal yang paling tepat adalah ...",
+        options: ["Langsung mengganti CPU", "Memeriksa daya monitor serta kabel dan sumber input layar", "Menghapus seluruh data di SSD", "Melepas semua komponen saat komputer menyala"],
+        answer: 1,
+        explanation: "Periksa hal dasar terlebih dahulu, seperti daya monitor, sambungan kabel, dan pilihan sumber input. Jika belum berhasil, minta bantuan guru atau teknisi sebelum memeriksa bagian internal."
+      },
+      {
+        question: "Sekolah ingin menyimpan sistem operasi dan file agar tetap tersedia setelah komputer dimatikan. Komponen yang paling sesuai adalah ...",
+        options: ["RAM", "ALU", "SSD atau HDD", "Control Unit"],
+        answer: 2,
+        explanation: "SSD dan HDD adalah media penyimpanan sekunder yang menyimpan sistem operasi serta file secara permanen meskipun daya dimatikan."
+      }
+    ];
+
+    function renderQuiz() {
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = "";
+
+      quizQuestions.forEach((question, index) => {
+        const card = document.createElement("div");
+        card.className = "quiz-question";
+
+        card.innerHTML = `
+          <span class="pill">Soal ${index + 1} dari ${quizQuestions.length}</span>
+          <h3>${question.question}</h3>
+          <div class="option-list">
+            ${question.options.map((option, optionIndex) => `
+              <label class="option">
+                <input
+                  type="radio"
+                  name="quiz${index}"
+                  value="${optionIndex}"
+                >
+                <span>${String.fromCharCode(65 + optionIndex)}. ${option}</span>
+              </label>
+            `).join("")}
+          </div>
+          <div id="quizFeedback${index}"></div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("submitQuizBtn").addEventListener("click", () => {
+      let score = 0;
+      let answered = 0;
+
+      quizQuestions.forEach((question, index) => {
+        const selected = document.querySelector(`input[name="quiz${index}"]:checked`);
+        const feedback = document.getElementById(`quizFeedback${index}`);
+
+        if (selected) {
+          answered++;
+
+          if (Number(selected.value) === question.answer) {
+            score++;
+            feedback.innerHTML = `
+              <div class="callout success">
+                <strong>Benar!</strong> ${question.explanation}
+              </div>
+            `;
+          } else {
+            feedback.innerHTML = `
+              <div class="callout danger">
+                <strong>Belum tepat.</strong> ${question.explanation}
+              </div>
+            `;
+          }
+        } else {
+          feedback.innerHTML = `
+            <div class="callout warning">Soal ini belum dijawab.</div>
+          `;
+        }
+      });
+
+      const percentage = Math.round(score / quizQuestions.length * 100);
+
+      document.getElementById("quizResult").innerHTML = `
+        <div class="quiz-result">
+          <div class="eyebrow">Hasil Kuis</div>
+          <div class="quiz-score">${score}/${quizQuestions.length}</div>
+          <h3>Nilai: ${percentage}</h3>
+          <p>
+            Kamu menjawab ${answered} dari ${quizQuestions.length} soal.
+            Baca umpan balik setiap soal untuk mengetahui bagian yang perlu
+            dipelajari kembali.
+          </p>
+          <div class="build-progress">
+            <div style="width:${percentage}%"></div>
+          </div>
+          <p>
+            ${
+              score === quizQuestions.length
+                ? "Semua jawaban benar. Pertahankan pemahamanmu!"
+                : "Pelajari kembali materi dan coba lagi setelah memahami penjelasannya."
+            }
+          </p>
+        </div>
+      `;
+
+      document.getElementById("quizResult").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    document.getElementById("retryQuizBtn").addEventListener("click", () => {
+      renderQuiz();
+      document.getElementById("quizResult").innerHTML = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    renderQuiz();
+  </script>
+</body>
+</html>
